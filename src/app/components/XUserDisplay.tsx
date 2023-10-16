@@ -3,7 +3,11 @@ import React from "react";
 
 const { Text } = Typography;
 
-const XUserDisplay: React.FC = () => {
+type XUserDisplayProps = {
+  username: string;
+};
+
+const XUserDisplay = (props: XUserDisplayProps) => {
   return (
     <ConfigProvider>
       <div className="flex items-center justify-between">
@@ -12,11 +16,11 @@ const XUserDisplay: React.FC = () => {
           size={36}
           style={{ backgroundColor: "red", color: "#ffffff", display: "flex" }}
         >
-          <span style={{ fontSize: "14px" }}> HV </span>
+          <span style={{ fontSize: "14px" }}> {props.username[0].toUpperCase()} </span>
         </Avatar>
         <div className="flex flex-col ml-2 items-start justify-between">
           <Text className="mt-1" style={{ fontSize: "16px", color: "#fff" }}>
-            Huỳnh Văn Quới
+            {props.username}
           </Text>
           <Text className="mb-1" style={{ fontSize: "12px", color: "#fff" }}>
             User

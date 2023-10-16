@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 import "@/theme/themeConfig";
 import { Header } from "antd/es/layout/layout";
-import { Avatar, Image, Menu, MenuProps } from "antd";
+import { Avatar, Button, Image, Menu, MenuProps } from "antd";
 import { useRouter } from "next/navigation";
 import "../home/styles.scss";
 import XUserDisplay from "@/app/components/XUserDisplay";
@@ -86,6 +86,7 @@ const menu = [
 
 const HomeHeader = () => {
   const router = useRouter();
+  const [isAuth, setIsAuth] = useState(!!localStorage.getItem("user"));
   return (
     <Header
       style={{
@@ -113,7 +114,40 @@ const HomeHeader = () => {
           onClick={(item) => router.push(`./job`)}
         ></Menu>
       </div>
-      <XUserDisplay />
+      {isAuth ? (
+        <div
+          onClick={() => {
+            localStorage.removeItem("user");
+            setIsAuth(false);
+          }}
+        >
+          <XUserDisplay
+            username={localStorage.getItem("user")?.toString() || ""}
+          />
+        </div>
+      ) : (
+        <div
+          className="flex items-center justify-between"
+          style={{ width: "200px" }}
+        >
+          <Button
+            type="primary"
+            color="white"
+            style={{ background: "red", width: "96px" }}
+            href="./auth/login"
+          >
+            Đăng nhập
+          </Button>
+          <Button
+            type="primary"
+            color="white"
+            style={{ background: "black", width: "96px" }}
+            href="./auth/register"
+          >
+            Đăng ký
+          </Button>
+        </div>
+      )}
     </Header>
   );
 };
